@@ -1,117 +1,115 @@
-# 智能客服机器人 (LangChain Customer Service Robot)
+# Intelligent Customer Service Robot (LangChain Customer Service Robot)
 
-基于 LangChain 构建的智能客服机器人系统，支持知识库问答、订单查询、客户信息管理等功能，提供命令行和 Web UI 两种交互方式。
+An intelligent customer service robot system built with LangChain, supporting knowledge base Q&A, order queries, customer information management, and more. Provides both CLI and Web UI interaction modes.
 
-## 功能特性
+## Features
 
-- **智能对话**: 基于 LangChain Agent 的智能客服对话
-- **知识库问答**: 使用 RAG (检索增强生成) 技术，支持向量检索 + BM25 混合检索
-- **多工具支持**: 
-  - 客户信息查询
-  - 订单状态查询
-  - 工单创建
-  - 知识库搜索
-- **会话管理**: 支持多用户、多会话的对话历史存储
-- **Web UI**: 现代化的 Web 界面，支持实时 WebSocket 通信
+- **Intelligent Conversation**: Smart customer service dialogue based on LangChain Agent
+- **Knowledge Base Q&A**: Uses RAG (Retrieval-Augmented Generation) technology with hybrid retrieval (Vector + BM25)
+- **Multi-Tool Support**:
+  - Customer information query
+  - Order status query
+  - Ticket creation
+  - Knowledge base search
+- **Session Management**: Supports multi-user, multi-session conversation history storage
+- **Web UI**: Modern web interface with real-time WebSocket communication
 
-## 项目结构
+## Project Structure
 
 ```
 langchain_customer_service_robot/
-├── core/                       # 核心模块
+├── core/                       # Core modules
 │   ├── __init__.py
-│   ├── config.py               # 配置管理
-│   └── agent_state.py          # Agent 状态定义
-├── splitters/                  # 文本分块器
+│   ├── config.py               # Configuration management
+│   └── agent_state.py          # Agent state definition
+├── splitters/                  # Text splitters
 │   ├── __init__.py
-│   └── semantic_splitter.py    # 语义分块器
-├── retrievers/                 # 检索器
+│   └── semantic_splitter.py    # Semantic text splitter
+├── retrievers/                 # Retrievers
 │   ├── __init__.py
-│   └── hybrid_retriever.py     # 混合检索器（向量 + BM25）
-├── knowledge_base/             # 知识库模块
+│   └── hybrid_retriever.py     # Hybrid retriever (Vector + BM25)
+├── knowledge_base/             # Knowledge base module
 │   ├── __init__.py
-│   └── knowledge_base.py       # 知识库核心类
-├── tools/                      # Agent 工具
+│   └── knowledge_base.py       # Knowledge base core class
+├── tools/                      # Agent tools
 │   ├── __init__.py
-│   └── customer_tools.py       # 客服工具定义
-├── storage/                    # 存储模块
+│   └── customer_tools.py       # Customer service tool definitions
+├── storage/                    # Storage module
 │   ├── __init__.py
-│   ├── conversation_storage.py # 对话存储
-│   └── customer_database.py    # 客户数据库（模拟）
-├── bot/                        # 机器人模块
+│   ├── conversation_storage.py # Conversation storage
+│   └── customer_database.py    # Customer database (mock)
+├── bot/                        # Bot module
 │   ├── __init__.py
-│   └── customer_service_bot.py # 客服机器人核心逻辑
-├── web/                        # Web 模块
+│   └── customer_service_bot.py # Customer service bot core logic
+├── web/                        # Web module
 │   ├── __init__.py
-│   └── web_app.py              # Web API 服务
-├── cli/                        # 命令行模块
+│   └── web_app.py              # Web API service
+├── cli/                        # CLI module
 │   ├── __init__.py
-│   └── main.py                 # CLI 入口
-├── templates/                  # Web 模板
-│   └── index.html              # Web UI 界面
-├── knowledge_docs/             # 知识库文档目录
-│   └── 电商客服服务手册.txt
-├── knowledge_index/            # 知识库索引目录
+│   └── main.py                 # CLI entry point
+├── templates/                  # Web templates
+│   └── index.html              # Web UI interface
+├── knowledge_docs/             # Knowledge base documents directory
+├── knowledge_index/            # Knowledge base index directory
 │   ├── index.faiss
 │   ├── index.pkl
 │   └── bm25_index.json
-├── conversation/               # 对话历史存储
-│   └── customer_service_history.json
-├── main.py                     # CLI 入口
-├── run_web.py                  # Web 服务启动脚本
-├── start_web.bat               # Windows 启动脚本
-├── requirements.txt            # 依赖文件
-├── pyproject.toml              # 项目配置文件
-├── .env.example                # 环境变量示例
-└── README.md                   # 项目说明
+├── conversation/               # Conversation history storage
+├── main.py                     # CLI entry point
+├── run_web.py                  # Web service startup script
+├── start_web.bat               # Windows startup script
+├── requirements.txt            # Dependencies
+├── pyproject.toml              # Project configuration
+├── .env.example                # Environment variables example
+└── README.md                   # Project documentation
 ```
 
-## 模块说明
+## Module Description
 
-### 核心模块 (core/)
-- **config.py**: 使用 Pydantic Settings 管理配置，支持环境变量
-- **agent_state.py**: 定义 Agent 状态结构，用于 LangGraph 状态管理
+### Core Module (core/)
+- **config.py**: Configuration management using Pydantic Settings with environment variable support
+- **agent_state.py**: Defines Agent state structure for LangGraph state management
 
-### 分块器模块 (splitters/)
-- **semantic_splitter.py**: 基于语义相似度的文本分块器，将语义相近的文本块合并
+### Splitters Module (splitters/)
+- **semantic_splitter.py**: Semantic-based text splitter that merges semantically similar text chunks
 
-### 检索器模块 (retrievers/)
-- **hybrid_retriever.py**: 混合检索器，结合向量检索和 BM25 检索的优势
+### Retrievers Module (retrievers/)
+- **hybrid_retriever.py**: Hybrid retriever combining vector retrieval and BM25 retrieval
 
-### 知识库模块 (knowledge_base/)
-- **knowledge_base.py**: 知识库管理核心类，提供索引构建、加载、检索和问答功能
+### Knowledge Base Module (knowledge_base/)
+- **knowledge_base.py**: Core knowledge base management class providing index building, loading, retrieval, and Q&A functionality
 
-### 工具模块 (tools/)
-- **customer_tools.py**: Agent 工具定义，包括客户信息查询、订单查询、工单创建、知识库搜索
+### Tools Module (tools/)
+- **customer_tools.py**: Agent tool definitions including customer info query, order query, ticket creation, and knowledge base search
 
-### 存储模块 (storage/)
-- **conversation_storage.py**: 基于 JSON 的多用户、多会话对话存储
-- **customer_database.py**: 模拟客户数据库，存储客户信息和订单数据
+### Storage Module (storage/)
+- **conversation_storage.py**: JSON-based multi-user, multi-session conversation storage
+- **customer_database.py**: Mock customer database storing customer information and order data
 
-### 机器人模块 (bot/)
-- **customer_service_bot.py**: 客服机器人核心逻辑，整合 LLM、工具和存储
+### Bot Module (bot/)
+- **customer_service_bot.py**: Customer service bot core logic integrating LLM, tools, and storage
 
-### Web 模块 (web/)
-- **web_app.py**: FastAPI Web 服务，提供 REST API 和 WebSocket 接口
+### Web Module (web/)
+- **web_app.py**: FastAPI web service providing REST API and WebSocket interfaces
 
-### 命令行模块 (cli/)
-- **main.py**: 命令行交互入口
+### CLI Module (cli/)
+- **main.py**: Command-line interaction entry point
 
-## 环境要求
+## Requirements
 
 - Python 3.11+
-- 依赖包见 `requirements.txt`
+- See `requirements.txt` for dependencies
 
-## 安装
+## Installation
 
-### 1. 克隆项目
+### 1. Clone the Project
 
 ```bash
 git clone <repository-url>
 cd langchain_customer_service_robot
 ```
 
-### 2. 创建虚拟环境（推荐）
+### 2. Create Virtual Environment (Recommended)
 
 ```bash
 python -m venv .venv
@@ -123,263 +121,244 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. 安装依赖
-
-**方式一：使用 pip 默认源安装**
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 pip install -e .
 ```
 
-**方式二：使用清华源安装（推荐国内用户）**
+> **Note**: `pip install -e .` installs the project in editable mode, allowing proper module imports.
 
-如果默认源安装失败或速度较慢，可以使用清华源镜像：
+### 4. Configure Environment Variables
 
-```bash
-pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-pip install -e . -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
-
-或者设置永久使用清华源：
-
-```bash
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-pip install -r requirements.txt
-pip install -e .
-```
-
-> **注意**: `pip install -e .` 用于以可编辑模式安装本项目包，使得项目内的模块可以正确导入。
-
-### 4. 配置环境变量
-
-复制环境变量示例文件：
+Copy the environment variables example file:
 
 ```bash
 copy .env.example .env   # Windows
-# 或
+# or
 cp .env.example .env     # Linux/macOS
 ```
 
-编辑 `.env` 文件，填入您的 API 密钥：
+Edit the `.env` file and fill in your API keys:
 
 ```env
-# DeepSeek API 配置（用于 LLM 对话，必填）
+# DeepSeek API Configuration (for LLM conversation, required)
 DEEPSEEK_API_KEY=your_deepseek_api_key_here
 DEEPSEEK_BASE_URL=https://api.deepseek.com
 DEEPSEEK_MODEL=deepseek-chat
 
-# SiliconFlow Embedding API 配置（用于知识库向量化，必填）
+# SiliconFlow Embedding API Configuration (for knowledge base vectorization, required)
 SILICONFLOW_API_KEY=your_siliconflow_api_key_here
 ```
 
-> **注意**: 
-> - 您需要自行申请 DeepSeek API Key: https://platform.deepseek.com/
-> - SiliconFlow API Key 用于 Embedding 向量化: https://siliconflow.cn/
+> **Note**:
+> - You need to apply for DeepSeek API Key: https://platform.deepseek.com/
+> - SiliconFlow API Key is used for Embedding vectorization: https://siliconflow.cn/
 
-## 使用方法
+## Usage
 
-### 方式一：命令行模式
+### Method 1: CLI Mode
 
 ```bash
 python main.py
 ```
 
-运行后按提示输入用户ID，即可开始对话：
-- 输入问题与客服机器人对话
-- 输入 `quit` 结束对话并保存会话
+After running, enter a user ID as prompted to start a conversation:
+- Enter questions to chat with the customer service bot
+- Enter `quit` to end the conversation and save the session
 
-### 方式二：Web UI 模式
+### Method 2: Web UI Mode
 
-1. 启动 Web 服务：
+1. Start the web service:
 
 ```bash
 python run_web.py
 ```
 
-或使用 Windows 批处理脚本：
+Or use the Windows batch script:
 ```bash
 start_web.bat
 ```
 
-2. 打开浏览器访问：`http://localhost:8003`
+2. Open your browser and visit: `http://localhost:8003`
 
-#### Web UI 功能说明
+#### Web UI Features
 
-- **用户ID**: 输入用户标识（如 user001、user002）
-- **加载历史会话**: 查看并继续之前的对话
-- **新建会话**: 开始一个新的对话会话
-- **实时对话**: 通过 WebSocket 实现低延迟实时通信
+- **User ID**: Enter a user identifier (e.g., user001, user002)
+- **Load History**: View and continue previous conversations
+- **New Session**: Start a new conversation session
+- **Real-time Chat**: Low-latency real-time communication via WebSocket
 
-## API 接口
+## API Reference
 
 ### REST API
 
-| 接口 | 方法 | 说明 |
-|------|------|------|
-| `/` | GET | Web UI 页面 |
-| `/api/sessions/{user_id}` | GET | 获取用户历史会话列表 |
-| `/api/chat` | POST | 发送消息并获取回复 |
-| `/api/session/new` | POST | 创建新会话 |
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | Web UI page |
+| `/api/sessions/{user_id}` | GET | Get user's historical session list |
+| `/api/chat` | POST | Send message and get response |
+| `/api/session/new` | POST | Create new session |
 
 ### WebSocket API
 
-连接地址：`/ws/chat`
+Connection endpoint: `/ws/chat`
 
-消息格式：
+Message format:
 ```json
-// 初始化会话
+// Initialize session
 {"type": "init", "user_id": "user001", "session_id": "optional_session_id"}
 
-// 发送消息
-{"type": "message", "content": "你好"}
+// Send message
+{"type": "message", "content": "Hello"}
 
-// 新建会话
+// New session
 {"type": "new_session", "user_id": "user001"}
 ```
 
-## Agent 工具说明
+## Agent Tools
 
-| 工具名称 | 功能 | 参数 |
-|----------|------|------|
-| `get_customer_info` | 获取客户信息 | `user_id`: 客户ID |
-| `get_order_status` | 查询订单状态 | `order_id`: 订单号 |
-| `query_orders` | 查询客户订单 | `user_id`: 客户ID |
-| `create_ticket` | 创建客服工单 | `user_id`, `problem` |
-| `search_knowledge_base` | 搜索知识库 | `keyword`: 关键词 |
+| Tool Name | Function | Parameters |
+|-----------|----------|------------|
+| `get_customer_info` | Get customer information | `user_id`: Customer ID |
+| `get_order_status` | Query order status | `order_id`: Order number |
+| `query_orders` | Query customer orders | `user_id`: Customer ID |
+| `create_ticket` | Create service ticket | `user_id`, `problem` |
+| `search_knowledge_base` | Search knowledge base | `keyword`: Keyword |
 
-## 配置说明
+## Configuration
 
-`core/config.py` 支持以下配置项：
+`core/config.py` supports the following configuration items:
 
-| 配置项 | 默认值 | 说明 |
-|--------|--------|------|
-| `chunk_size` | 500 | 文本分块大小 |
-| `chunk_overlap` | 50 | 分块重叠大小 |
-| `retrieval_k` | 5 | 检索返回文档数 |
-| `rerank_top_k` | 3 | 重排序后保留数 |
-| `similarity_threshold` | 0.5 | 相似度阈值 |
-| `temperature` | 0.7 | 模型温度 |
-| `embedding_base_url` | - | Embedding API 地址 |
-| `embedding_model` | BAAI/bge-m3 | Embedding 模型 |
+| Config Item | Default | Description |
+|-------------|---------|-------------|
+| `chunk_size` | 500 | Text chunk size |
+| `chunk_overlap` | 50 | Chunk overlap size |
+| `retrieval_k` | 5 | Number of documents to retrieve |
+| `rerank_top_k` | 3 | Number to keep after reranking |
+| `similarity_threshold` | 0.5 | Similarity threshold |
+| `temperature` | 0.7 | Model temperature |
+| `embedding_base_url` | - | Embedding API URL |
+| `embedding_model` | BAAI/bge-m3 | Embedding model |
 
-## 知识库管理
+## Knowledge Base Management
 
-### 自定义客服手册
+### Customizing Service Manual
 
-项目默认提供了一个电商客服服务手册示例。您可以根据自己的业务需求自定义知识库：
+The project provides a sample e-commerce customer service manual by default. You can customize the knowledge base according to your business needs:
 
-1. **删除或替换现有文档**
-   - 删除 `knowledge_docs/` 目录中的示例文档
-   - 添加您自己的客服手册、FAQ、产品说明等文档
+1. **Delete or Replace Existing Documents**
+   - Delete sample documents in the `knowledge_docs/` directory
+   - Add your own service manuals, FAQs, product descriptions, etc.
 
-2. **支持的文档格式**
-   - `.txt` 文本文件（推荐，UTF-8 编码）
-   - `.pdf` PDF 文档
-   - `.docx` Word 文档
+2. **Supported Document Formats**
+   - `.txt` text files (recommended, UTF-8 encoding)
+   - `.pdf` PDF documents
+   - `.docx` Word documents
 
-3. **文档组织建议**
-   - 每个文档聚焦一个主题（如退货政策、产品说明等）
-   - 文档内容清晰、结构化
-   - 避免单个文档过大（建议不超过 1MB）
+3. **Document Organization Tips**
+   - Each document should focus on one topic (e.g., return policy, product description)
+   - Keep document content clear and structured
+   - Avoid overly large documents (recommended under 1MB)
 
-### 重建知识库索引
+### Rebuilding Knowledge Base Index
 
-当您添加、修改或删除知识文档后，需要重建索引：
+After adding, modifying, or deleting knowledge documents, rebuild the index:
 
 ```bash
-# 删除现有索引
+# Delete existing index
 rm -rf knowledge_index/      # Linux/macOS
 rmdir /s knowledge_index     # Windows
 
-# 重新启动程序，系统会自动重建索引
+# Restart the program, the system will automatically rebuild the index
 python main.py
 ```
 
-> **注意**: 首次运行或重建索引时，系统需要调用 Embedding API 对文档进行向量化，可能需要较长时间和一定的 API 费用。
+> **Note**: When running for the first time or rebuilding the index, the system needs to call the Embedding API to vectorize documents, which may take some time and incur API costs.
 
-## 示例对话
+## Example Conversation
 
 ```
-用户: 你好，我是user001，想查询一下我的订单
-客服: 您好！我是智能客服助手。我帮您查询一下您的订单信息。
-      [调用 query_orders 工具]
-      您有以下订单：
-      1. 订单号：order00101，商品：高端会员套餐，状态：已完成
-      2. 订单号：order00102，商品：专属服务包，状态：已完成
-      请问还有什么可以帮您的吗？
+User: Hello, I'm user001, I want to check my orders
+Bot: Hello! I'm the intelligent customer service assistant. Let me check your order information.
+     [Calling query_orders tool]
+     You have the following orders:
+     1. Order: order00101, Product: Premium Membership Package, Status: Completed
+     2. Order: order00102, Product: Exclusive Service Package, Status: Completed
+     Is there anything else I can help you with?
 
-用户: 退货流程是什么？
-客服: [调用 search_knowledge_base 工具]
-      退货流程如下：
-      1. 登录会员中心，进入"我的订单"
-      2. 选择对应订单，点击"申请退货"
-      3. 填写退货原因并上传凭证
-      4. 客服将在1-2个工作日内审核
-      5. 审核通过后48小时内寄回商品
-      ...
+User: What is the return process?
+Bot: [Calling search_knowledge_base tool]
+     The return process is as follows:
+     1. Log in to the member center and go to "My Orders"
+     2. Select the corresponding order and click "Apply for Return"
+     3. Fill in the reason for return and upload evidence
+     4. Customer service will review within 1-2 business days
+     5. Send back the item within 48 hours after approval
+     ...
 ```
 
-## 技术栈
+## Tech Stack
 
-- **LangChain**: LLM 应用框架
-- **LangGraph**: Agent 状态管理
-- **FAISS**: 向量数据库
-- **BM25**: 关键词检索
-- **FastAPI**: Web 框架
-- **Uvicorn**: ASGI 服务器
-- **WebSocket**: 实时通信
-- **Jinja2**: 模板引擎
+- **LangChain**: LLM application framework
+- **LangGraph**: Agent state management
+- **FAISS**: Vector database
+- **BM25**: Keyword retrieval
+- **FastAPI**: Web framework
+- **Uvicorn**: ASGI server
+- **WebSocket**: Real-time communication
+- **Jinja2**: Template engine
 
-## 架构设计
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      用户交互层                              │
+│                    User Interaction Layer                   │
 │  ┌─────────────┐              ┌─────────────────────────┐   │
-│  │   CLI 模式   │              │       Web UI 模式        │   │
-│  │   (cli/)    │              │    (web/ + templates/)  │   │
+│  │  CLI Mode   │              │      Web UI Mode        │   │
+│  │   (cli/)    │              │  (web/ + templates/)    │   │
 │  └─────────────┘              └─────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                      业务逻辑层                              │
+│                    Business Logic Layer                     │
 │  ┌─────────────────────────────────────────────────────┐    │
 │  │              CustomerServiceBot (bot/)               │    │
 │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │    │
-│  │  │   LLM 模型   │  │  Agent 逻辑  │  │  工具调用   │  │    │
+│  │  │  LLM Model  │  │Agent Logic  │  │Tool Calling │  │    │
 │  │  └─────────────┘  └─────────────┘  └─────────────┘  │    │
 │  └─────────────────────────────────────────────────────┘    │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                      工具与服务层                            │
+│                   Tools & Services Layer                    │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
-│  │   工具模块   │  │  知识库模块  │  │      存储模块        │  │
-│  │  (tools/)   │  │(knowledge_  │  │     (storage/)      │  │
+│  │Tools Module │  │Knowledge Base│  │  Storage Module    │  │
+│  │  (tools/)   │  │(knowledge_   │  │    (storage/)      │  │
 │  │             │  │   base/)    │  │                     │  │
 │  └─────────────┘  └─────────────┘  └─────────────────────┘  │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                      基础设施层                              │
+│                   Infrastructure Layer                      │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
-│  │  检索器模块  │  │  分块器模块  │  │      配置模块        │  │
-│  │(retrievers/)│  │(splitters/) │  │      (core/)        │  │
+│  │  Retrievers │  │  Splitters  │  │  Configuration     │  │
+│  │(retrievers/)│  │(splitters/) │  │      (core/)       │  │
 │  └─────────────┘  └─────────────┘  └─────────────────────┘  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 注意事项
+## Notes
 
-1. 首次运行需要联网下载 Embedding 模型
-2. 知识库索引构建可能需要较长时间
-3. 确保 `.env` 文件中的 API Key 有效
-4. 对话历史保存在 `conversation/` 目录下
-5. 请勿将 `.env` 文件提交到代码仓库
+1. First-time run requires internet connection to download the Embedding model
+2. Knowledge base index building may take some time
+3. Ensure the API Key in the `.env` file is valid
+4. Conversation history is saved in the `conversation/` directory
+5. Do not commit the `.env` file to the repository
 
 ## License
 
